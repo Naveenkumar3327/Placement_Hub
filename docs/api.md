@@ -85,7 +85,7 @@ Updates application stage (`Applied`, `Under Review`, `Shortlisted`, `Interview 
 ## 5. AI Service Endpoints
 
 ### `POST /api/ai/ats-check`
-Audits plaintext or markdown resume against ATS standards and optional job descriptions.
+Audits plaintext or markdown resume against ATS standards and optional job descriptions. Accepts JSON (`resumeText`, optional `jobDescription`) or multipart form data with a `resume` file (PDF, DOCX, or TXT, up to 5 MB). Set `parseOnly=true` on multipart requests to extract text without running the audit.
 - **Response**: Scores for Keyword Match, Skills Match, Experience Match, Formatting, Action Verbs, and AI suggestions.
 
 ### `POST /api/ai/job-match`
