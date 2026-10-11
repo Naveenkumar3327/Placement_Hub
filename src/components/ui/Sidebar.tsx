@@ -96,7 +96,7 @@ export function Sidebar({ role = "student", profileCompletion = 85 }: SidebarPro
         <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-xs">
           <p className="font-bold text-purple-900 dark:text-purple-200">Company Recruiter Portal</p>
           <p className="text-purple-700 dark:text-purple-300 text-[11px] mt-0.5">
-            Campus Placement Suite
+            Placement Hub
           </p>
         </div>
       )}

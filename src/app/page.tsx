@@ -17,6 +17,7 @@ import {
   Layers,
   Award,
   Zap,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -27,7 +28,7 @@ export default function HomePage() {
     avgPackage: 1550000,
     highestPackage: 2400000,
   });
-
+    
   useEffect(() => {
     fetch("/api/admin/stats")
       .then((res) => res.json())
@@ -62,8 +63,8 @@ export default function HomePage() {
 
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
               Accelerate Your Career with{" "}
-              <span className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-cyan-500 bg-clip-text text-transparent">
-                Intelligent Placement AI
+              <span className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-cyan-500 bg-clip-text text-transparent">
+                Placement Hub
               </span>
             </h1>
 
@@ -295,11 +296,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-md gradient-brand flex items-center justify-center text-white">
-              <Sparkles className="w-3.5 h-3.5" />
+              <BriefcaseBusiness className="w-3.5 h-3.5" />
             </div>
-            <span className="font-bold text-white text-sm">CampusAI Placement Portal</span>
+            <span className="font-bold text-white text-sm">Placement Hub</span>
           </div>
-          <p>© 2026 CampusAI Inc. Built for University & College Career Placement Cells.</p>
+          <p>© 2026 Placement Hub. Built for University & College Career Placement Cells.</p>
           <div className="flex space-x-4">
             <Link href="/jobs" className="hover:text-white transition-colors">Opportunities</Link>
             <Link href="/ats-checker" className="hover:text-white transition-colors">ATS Checker</Link>

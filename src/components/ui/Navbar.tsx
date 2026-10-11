@@ -16,6 +16,7 @@ import {
   Compass,
   MessageSquare,
   ShieldAlert,
+  BriefcaseBusiness,
 } from "lucide-react";
 
 export function Navbar() {
@@ -81,18 +82,11 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full glass-panel border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-3 group">
-          <div className="w-10 h-10 rounded-xl gradient-brand flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5" />
+        <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+          <div className="w-10 h-10 rounded-xl bg-emerald-950 flex items-center justify-center text-lime-300 shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform">
+            <BriefcaseBusiness className="w-5 h-5" />
           </div>
-          <div>
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-indigo-600 via-indigo-700 to-cyan-600 bg-clip-text text-transparent">
-              CampusAI
-            </span>
-            <span className="hidden sm:inline-block ml-1.5 text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-              Placement Hub
-            </span>
-          </div>
+          <span className="whitespace-nowrap font-extrabold text-base sm:text-xl text-slate-900">Placement Hub</span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -234,13 +228,13 @@ export function Navbar() {
             <div className="flex items-center space-x-2">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors"
+                className="hidden whitespace-nowrap px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors sm:inline-flex"
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-                className="px-4 py-1.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm shadow-indigo-500/20 transition-all hover:shadow"
+                className="whitespace-nowrap rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all hover:bg-indigo-700 hover:shadow sm:px-4 sm:text-sm"
               >
                 Get Started
               </Link>
@@ -303,6 +297,24 @@ export function Navbar() {
             >
               My Dashboard ({currentUser.role})
             </Link>
+          )}
+          {!currentUser && (
+            <div className="flex gap-2 border-t border-slate-200 pt-3">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex-1 rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-700"
+              >
+                Get Started
+              </Link>
+            </div>
           )}
         </div>
       )}
