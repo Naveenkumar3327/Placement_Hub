@@ -17,11 +17,15 @@ import {
   MessageSquare,
   ShieldAlert,
   BriefcaseBusiness,
+  Moon,
+  Sun,
 } from "lucide-react";
+import { useTheme } from "@/components/ui/ThemeProvider";
 
 export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -127,6 +131,15 @@ export function Navbar() {
 
         {/* Right Section / Auth Controls */}
         <div className="flex items-center space-x-3">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-indigo-600 dark:text-slate-300 dark:hover:bg-slate-800"
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          </button>
           {currentUser ? (
             <>
               {/* Notification Bell */}
@@ -234,7 +247,7 @@ export function Navbar() {
               </Link>
               <Link
                 href="/register"
-                className="whitespace-nowrap rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all hover:bg-indigo-700 hover:shadow sm:px-4 sm:text-sm"
+                className="hidden whitespace-nowrap rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all hover:bg-indigo-700 hover:shadow sm:inline-flex sm:px-4 sm:text-sm"
               >
                 Get Started
               </Link>

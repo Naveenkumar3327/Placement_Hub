@@ -38,6 +38,57 @@ body {
   min-height: 100vh;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/80,
+html.dark .bg-white\/90 {
+  background-color: #14251e;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/50 {
+  background-color: #0b1712;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-slate-200 {
+  background-color: #22352c;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #f6f8f5;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #d7e2db;
+}
+
+html.dark .text-slate-500 {
+  color: #b8cbbf;
+}
+
+html.dark .text-slate-400 {
+  color: #89a292;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-200\/80,
+html.dark .border-slate-200\/90,
+html.dark .border-slate-300 {
+  border-color: #34483d;
+}
+
+html.dark .glass-panel {
+  background: rgba(20, 37, 30, 0.9);
+  border-color: rgba(52, 72, 61, 0.8);
+}
+
 /* Glassmorphism helpers */
 .glass-panel {
   background: rgba(255, 255, 255, 0.85);
