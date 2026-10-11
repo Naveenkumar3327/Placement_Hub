@@ -205,7 +205,7 @@ export default function ApplicationsPage() {
                     <th className="p-4">Opportunity</th>
                     <th className="p-4">Company</th>
                     <th className="p-4">Applied Date</th>
-                    <th className="p-4">AI Match</th>
+                    <th className="p-4">Role match</th>
                     <th className="p-4">Current Status</th>
                     <th className="p-4">Interview Details</th>
                     <th className="p-4 text-right">Actions</th>

@@ -60,11 +60,11 @@ const ROLE_BENCHMARKS: Record<
       { name: "Meta Back-End Developer Certificate", issuer: "Meta / Coursera", url: "https://coursera.org" },
     ],
   },
-  "AI / Machine Learning Engineer": {
+  "Machine Learning Engineer": {
     categories: {
-      "Core AI/ML": ["Python", "PyTorch", "TensorFlow", "Scikit-Learn", "Machine Learning"],
+      "Core Machine Learning": ["Python", "PyTorch", "TensorFlow", "Scikit-Learn", "Machine Learning"],
       "Data & Math": ["Pandas", "NumPy", "Linear Algebra", "Probability", "SQL"],
-      "Modern AI": ["NLP", "Transformers", "LLMs", "LangChain", "Vector Databases"],
+      "Modern Machine Learning": ["NLP", "Transformers", "LLMs", "LangChain", "Vector Databases"],
       "Deployment": ["FastAPI", "Docker", "ONNX", "MLflow", "Cloud GPUs"],
     },
     certifications: [

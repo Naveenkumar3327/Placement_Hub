@@ -58,7 +58,7 @@ Frontend Developer Intern | InnovateTech Labs (May 2025 - August 2025)
 
 PROJECTS
 Smart Campus Placement Suite (Next.js, TypeScript, MongoDB)
-- Developed automated resume ATS scoring system and AI mock interview platform serving university students.
+- Developed automated resume screening and interview practice tools for university students.
 - Implemented JWT authentication and role-based permissions for students, recruiters, and admins.
 
 Distributed Order Processing Service (Node.js, Express, Redis, Docker)
@@ -358,11 +358,11 @@ Requirements:
               </div>
             </div>
 
-            {/* AI Executive Summary */}
+            {/* Executive summary */}
             <div className="p-6 rounded-3xl bg-indigo-50/60 border border-indigo-100 space-y-2">
               <div className="flex items-center space-x-2 text-indigo-900 font-bold text-sm">
                 <Sparkles className="w-4 h-4 text-indigo-600" />
-                <span>AI Hiring Auditor Evaluation</span>
+                <span>Resume review summary</span>
               </div>
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
                 {result.summary}

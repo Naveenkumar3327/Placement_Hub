@@ -68,7 +68,7 @@ export default function CompanyDashboardPage() {
               Recruitment Command Center
             </h1>
             <p className="text-xs sm:text-sm text-purple-200 max-w-xl font-normal">
-              Manage your university drives, evaluate AI-ranked student portfolios, and schedule multi-stage technical interviews.
+              Manage university drives, compare student portfolios with role requirements, and schedule multi-stage technical interviews.
             </p>
           </div>
 
@@ -105,12 +105,12 @@ export default function CompanyDashboardPage() {
           </div>
         </div>
 
-        {/* Recent Candidate Applications with AI Match Score */}
+        {/* Recent candidate applications with role match scores */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-bold text-slate-900">Recent Candidate Submissions</h2>
-              <p className="text-xs text-slate-500">Ranked by automated AI resume compatibility match</p>
+              <p className="text-xs text-slate-500">Sorted by resume and role compatibility</p>
             </div>
             <Link
               href="/company/applicants"
@@ -127,7 +127,7 @@ export default function CompanyDashboardPage() {
                   <tr>
                     <th className="p-4">Candidate Name</th>
                     <th className="p-4">Opportunity Applied</th>
-                    <th className="p-4">AI Match</th>
+                    <th className="p-4">Role match</th>
                     <th className="p-4">Current Status</th>
                     <th className="p-4">Submission Date</th>
                     <th className="p-4 text-right">Action</th>

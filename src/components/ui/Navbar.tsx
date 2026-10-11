@@ -21,6 +21,7 @@ import {
   Sun,
 } from "lucide-react";
 import { useTheme } from "@/components/ui/ThemeProvider";
+import { PlacementLogo } from "@/components/ui/PlacementLogo";
 
 export function Navbar() {
   const router = useRouter();
@@ -86,11 +87,14 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full glass-panel border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
-          <div className="w-10 h-10 rounded-xl bg-emerald-950 flex items-center justify-center text-lime-300 shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform">
-            <BriefcaseBusiness className="w-5 h-5" />
+        <Link href="/" className="group flex items-center gap-2 sm:gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-950 text-sky-200 shadow-md shadow-emerald-950/20 transition-transform group-hover:scale-105">
+            <PlacementLogo className="h-7 w-7" />
           </div>
-          <span className="whitespace-nowrap font-extrabold text-base sm:text-xl text-slate-900">Placement Hub</span>
+          <div className="flex min-w-0 flex-col">
+            <span className="whitespace-nowrap font-serif text-base font-bold text-slate-900 sm:text-lg">Placement <span className="italic text-emerald-700">Hub</span></span>
+            <span className="whitespace-nowrap text-[9px] font-semibold text-slate-500">CAMPUS • CAREERS • GROWTH</span>
+          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -287,7 +291,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100"
           >
-            AI Mock Interview
+            Interview Practice
           </Link>
           <Link
             href="/skill-gap"

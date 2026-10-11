@@ -6,13 +6,13 @@ import { ThemeProvider } from "@/components/ui/ThemeProvider";
 export const metadata: Metadata = {
   title: "Placement Hub | Career & Campus Hiring Portal",
   description:
-    "Next-generation campus placement suite featuring AI resume matching, ATS scanner, automated mock interviews, real-time application pipelines, and predictive skill-gap analytics.",
+    "A modern campus placement suite featuring resume matching, ATS checks, interview practice, real-time application pipelines, and skills analytics.",
   keywords: [
     "Campus Placement",
     "Internships",
-    "AI Resume Matching",
+    "Resume Matching",
     "ATS Resume Checker",
-    "Mock Interview AI",
+    "Mock Interview Practice",
     "Skill Gap Analysis",
     "Recruitment Portal",
   ],

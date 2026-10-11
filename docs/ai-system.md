@@ -28,9 +28,16 @@ Configuration is managed via standard environment variables:
 
 ```env
 AI_PROVIDER=gemini        # "gemini" or "openai"
-GEMINI_API_KEY=your_key   # When using Google Gemini 1.5 Flash
+GEMINI_API_KEY=your_key   # Google Gemini API
+GEMINI_MODEL=gemini-2.5-flash
 OPENAI_API_KEY=your_key   # When using OpenAI GPT-4o-mini
+HUGGINGFACE_API_TOKEN=your_token # Optional OPUS-MT speech-transcript translation
 ```
+
+### Interview Question Bank
+The mock interview includes the MIT-licensed [Software Engineering Interview Questions Dataset on Kaggle](https://www.kaggle.com/datasets/syedmharis/software-engineering-interview-questions-dataset). Its 200 imported questions are stored in `src/data/interview-questions.json` with source and license metadata. Refresh the import with `npm run import:kaggle-questions`; optionally pass a different Kaggle `owner/dataset` slug as the command argument. Public datasets can be downloaded without credentials; set `KAGGLE_USERNAME` and `KAGGLE_KEY` in the environment when Kaggle requires authentication.
+
+Speech is transcribed by the browser. Hindi, Spanish, and French transcripts can be translated to English through Hugging Face Inference Providers using the Apache-2.0 Helsinki-NLP OPUS-MT checkpoints. The server sends transcript text only; camera video is never uploaded. Set `HUGGINGFACE_API_TOKEN` to enable translation.
 
 ### Hybrid Deterministic Fallback Engine
 When an API key is not supplied (e.g. offline testing, reviewer demonstrations), CampusAI seamlessly engages its built-in algorithmic engine:

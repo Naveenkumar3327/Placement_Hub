@@ -58,7 +58,7 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto space-y-6">
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs sm:text-sm font-semibold shadow-sm animate-pulse">
               <Sparkles className="w-4 h-4 text-indigo-600" />
-              <span>AI-Powered Campus Recruitment & Placement Platform</span>
+              <span>Campus recruitment & placement platform</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
@@ -141,7 +141,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Student Portal</h3>
                 <p className="text-slate-600 text-sm mt-2">
-                  Build ATS-optimized resumes, unlock AI job compatibility scores, practice technical mock interviews, and track applications via interactive Kanban boards.
+                  Build ATS-ready resumes, compare your skills with open roles, practice technical interviews, and track applications in one place.
                 </p>
                 <ul className="mt-4 space-y-2 text-xs text-slate-600">
                   <li className="flex items-center space-x-2">
@@ -150,7 +150,7 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-center space-x-2">
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
-                    <span>AI Mock Interview Simulator</span>
+                    <span>Live Interview Practice</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
@@ -174,12 +174,12 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Recruiter & Company Portal</h3>
                 <p className="text-slate-600 text-sm mt-2">
-                  Post high-volume job drives, filter applicants by AI skill compatibility, schedule multi-round interviews, and message shortlisted candidates directly.
+                  Post high-volume job drives, compare applicant skills with role requirements, schedule interviews, and message shortlisted candidates.
                 </p>
                 <ul className="mt-4 space-y-2 text-xs text-slate-600">
                   <li className="flex items-center space-x-2">
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
-                    <span>Automated AI Candidate Ranking</span>
+                    <span>Candidate Skill Matching</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
@@ -272,9 +272,9 @@ export default function HomePage() {
               <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
                 <Video className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">AI Mock Interviews</h3>
+              <h3 className="text-lg font-bold text-slate-900">Interview Practice</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Simulates real technical, behavioral, and HR interview rounds with prompt-by-prompt AI feedback, technical precision scores, and comprehensive reports.
+                Practice technical, behavioral, and HR rounds with question-by-question feedback, skill scores, and a clear performance report.
               </p>
             </div>
 
@@ -284,7 +284,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-slate-900">Skill-Gap Roadmap</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Compares student proficiencies against industry role benchmarks (Full Stack, AI/ML, Cloud), generating week-by-week learning roadmaps and projects.
+                Compares your skills against Full Stack, Machine Learning, and Cloud role benchmarks, then builds a focused learning roadmap.
               </p>
             </div>
           </div>

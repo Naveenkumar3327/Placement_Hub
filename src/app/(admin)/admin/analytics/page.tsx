@@ -81,7 +81,7 @@ export default function PlacementAnalyticsDashboardPage() {
                 <p className="text-2xl font-black text-indigo-600 mt-1">
                   {formatLPA(data.stats.highestPackage || 2400000)}
                 </p>
-                <p className="text-[11px] text-slate-400 mt-0.5">Apex AI Solutions (Product R&D)</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">Apex Systems (Product R&D)</p>
               </div>
 
               <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm">

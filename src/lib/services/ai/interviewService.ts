@@ -1,11 +1,7 @@
 import { AiProvider } from "./aiProvider";
+import { getDatasetQuestions, type InterviewQuestionItem } from "./interviewQuestionBank";
 
-export interface InterviewQuestionItem {
-  id: number;
-  question: string;
-  category: "technical" | "behavioral" | "hr" | "system-design";
-  contextHint: string;
-}
+export type { InterviewQuestionItem } from "./interviewQuestionBank";
 
 export interface AnswerEvaluationResult {
   score: number; // 0-100
@@ -61,7 +57,7 @@ const DEFAULT_QUESTIONS_MAP: Record<string, InterviewQuestionItem[]> = {
       contextHint: "Convey enthusiasm, communication with stakeholders, and practical prioritization frameworks.",
     },
   ],
-  "AI / Machine Learning Engineer": [
+  "Machine Learning Engineer": [
     {
       id: 1,
       question: "How does self-attention work in the Transformer architecture, and why does it overcome the bottleneck limitations of recurrent neural networks (RNNs)?",
@@ -88,7 +84,7 @@ const DEFAULT_QUESTIONS_MAP: Record<string, InterviewQuestionItem[]> = {
     },
     {
       id: 5,
-      question: "How do you stay abreast of the rapid weekly advancements in generative AI research and open-source tooling?",
+      question: "How do you stay abreast of new machine-learning research and open-source tools?",
       category: "hr",
       contextHint: "Highlight ArXiv, GitHub repos, technical communities, and experimentation habits.",
     },
@@ -100,12 +96,21 @@ export class InterviewService {
     role: string,
     difficulty: "junior" | "mid" | "senior" = "mid",
     type: "technical" | "hr" | "behavioral" | "mixed" = "mixed",
-    count: number = 5
-  ): Promise<InterviewQuestionItem[]> {
-    const prompt = `Generate exactly ${count} professional mock interview questions for a ${difficulty}-level candidate applying for "${role}".
+    count: number = 5,
+    sourceMode: "dataset" | "gemini" | "mixed" = "mixed"
+  ): Promise<{ questions: InterviewQuestionItem[]; source: string }> {
+    const datasetQuestions = getDatasetQuestions(count, difficulty, type);
+    if (sourceMode === "dataset") {
+      return { questions: datasetQuestions, source: "Kaggle question bank" };
+    }
+
+    const generatedCount = sourceMode === "mixed" ? Math.ceil(count / 2) : count;
+    const examples = datasetQuestions.slice(0, 3).map((item) => `- ${item.question}`).join("\n");
+    const prompt = `Generate exactly ${generatedCount} original professional mock interview questions for a ${difficulty}-level candidate applying for "${role}".
 Interview type focus: ${type}.
+Use these licensed question-bank examples only as topic guidance; do not copy them:\n${examples}
 Return ONLY a valid JSON array of objects with keys:
-- "id": number (1 to ${count})
+- "id": number (1 to ${generatedCount})
 - "question": string
 - "category": ("technical" | "behavioral" | "hr" | "system-design")
 - "contextHint": string (guidance on what a great answer covers)`;
@@ -114,11 +119,28 @@ Return ONLY a valid JSON array of objects with keys:
       const response = await AiProvider.generateText(prompt, { jsonMode: true, temperature: 0.5 });
       if (response) {
         const parsed = JSON.parse(response);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.slice(0, count);
-        }
-        if (parsed.questions && Array.isArray(parsed.questions)) {
-          return parsed.questions.slice(0, count);
+        const generated = (Array.isArray(parsed) ? parsed : parsed.questions)
+          ?.filter((item: any) => typeof item.question === "string")
+          .slice(0, generatedCount)
+          .map((item: any, index: number) => ({
+            id: index + 1,
+            question: item.question,
+            category: ["technical", "behavioral", "hr", "system-design"].includes(item.category)
+              ? item.category
+              : "technical",
+            contextHint: typeof item.contextHint === "string" ? item.contextHint : "Structure your answer and explain your reasoning.",
+          })) as InterviewQuestionItem[] | undefined;
+
+        if (generated?.length) {
+          if (sourceMode === "gemini") {
+            return { questions: generated, source: "Gemini-generated questions" };
+          }
+
+          const combined = [
+            ...generated,
+            ...datasetQuestions.slice(0, Math.max(0, count - generated.length)),
+          ].map((question, index) => ({ ...question, id: index + 1 }));
+          return { questions: combined.slice(0, count), source: "Gemini + Kaggle question bank" };
         }
       }
     } catch (e) {
@@ -126,7 +148,10 @@ Return ONLY a valid JSON array of objects with keys:
     }
 
     const defaultBank = DEFAULT_QUESTIONS_MAP[role] || DEFAULT_QUESTIONS_MAP["Full Stack Developer"];
-    return defaultBank.slice(0, count);
+    if (!datasetQuestions.length) {
+      return { questions: defaultBank.slice(0, count), source: "Curated question bank" };
+    }
+    return { questions: datasetQuestions, source: "Kaggle question bank (Gemini unavailable)" };
   }
 
   public static async evaluateAnswer(

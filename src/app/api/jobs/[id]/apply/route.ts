@@ -96,7 +96,7 @@ export async function POST(
       _id: `notif_${Date.now()}_1`,
       recipientId: payload.userId,
       title: "Application Submitted Successfully",
-      message: `Your application for "${job.title}" at ${job.companyName} has been received with a ${matchAnalysis.overallScore}% AI compatibility match.`,
+      message: `Your application for "${job.title}" at ${job.companyName} has been received with a ${matchAnalysis.overallScore}% role compatibility score.`,
       type: "application_status",
       link: "/applications",
       read: false,

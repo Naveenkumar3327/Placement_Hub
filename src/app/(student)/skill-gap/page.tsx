@@ -51,7 +51,7 @@ export default function SkillGapPage() {
         <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white relative shadow-xl space-y-2">
           <div className="flex items-center space-x-2">
             <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-indigo-300 border border-white/15">
-              AI Market Benchmark Engine
+              Market Skills Benchmark
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
@@ -77,7 +77,7 @@ export default function SkillGapPage() {
             className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold text-indigo-950 bg-slate-50 focus:ring-2 focus:ring-indigo-500"
           >
             <option value="Full Stack Developer">Full Stack Developer</option>
-            <option value="AI / Machine Learning Engineer">AI / Machine Learning Engineer</option>
+            <option value="Machine Learning Engineer">Machine Learning Engineer</option>
             <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
             <option value="Data Scientist">Data Scientist</option>
           </select>

@@ -132,7 +132,7 @@ export default function StudentProfilePage() {
               Candidate Profile & Portfolio
             </h1>
             <p className="text-xs text-slate-500">
-              Keep your credentials and skills updated for automated AI job matching
+              Keep your credentials and skills updated for more relevant job matches
             </p>
           </div>
 

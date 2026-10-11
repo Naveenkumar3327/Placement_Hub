@@ -128,7 +128,7 @@ export default function ApplicantsPipelinePage() {
                 <span>Candidate Pipeline & Evaluation</span>
               </h1>
               <p className="text-xs text-slate-500">
-                Screen applicant resumes, review AI match compatibility, and advance candidates through interview rounds
+                Review applicant resumes, compare skills with role requirements, and advance candidates through interview rounds
               </p>
             </div>
             <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
@@ -218,7 +218,7 @@ export default function ApplicantsPipelinePage() {
                   <div className="text-left sm:text-right">
                     <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-xl text-xs font-black bg-purple-50 text-purple-700 border border-purple-200">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>{app.aiMatchScore}% AI Match</span>
+                      <span>{app.aiMatchScore}% role match</span>
                     </span>
                     <span className="block mt-1 text-[11px] font-bold text-slate-700 uppercase">
                       Status: {app.status}

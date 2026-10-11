@@ -4,38 +4,59 @@
 
 @layer base {
   :root {
-    --background: #f6f8f5;
-    --foreground: #14251e;
+    --background: #f7fbff;
+    --foreground: #132944;
     --card: #ffffff;
-    --card-foreground: #0f172a;
-    --border: #d7e2db;
-    --primary: #177653;
-    --primary-hover: #115e43;
-    --accent: #96ad2c;
-    --muted: #617c6b;
-    --muted-bg: #e9efe9;
+    --card-foreground: #132944;
+    --border: #d9e8f5;
+    --primary: #2869c4;
+    --primary-hover: #1f519c;
+    --accent: #4dbce9;
+    --muted: #627f9d;
+    --muted-bg: #edf5fc;
   }
 
   .dark {
-    --background: #0b1712;
-    --foreground: #f6f8f5;
-    --card: #14251e;
-    --card-foreground: #f6f8f5;
-    --border: #22352c;
-    --primary: #46ae7d;
-    --primary-hover: #80c8a3;
-    --accent: #b1c944;
-    --muted: #b8cbbf;
-    --muted-bg: #22352c;
+    --background: #0b1b32;
+    --foreground: #f1f7fd;
+    --card: #132944;
+    --card-foreground: #f1f7fd;
+    --border: #2d475f;
+    --primary: #62a5f3;
+    --primary-hover: #92c4fb;
+    --accent: #4dbce9;
+    --muted: #a7c6e0;
+    --muted-bg: #203956;
   }
 }
 
 body {
   color: var(--foreground);
   background-color: var(--background);
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-family: "Segoe UI Variable", Aptos, "Segoe UI", sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
   min-height: 100vh;
+}
+
+svg.lucide {
+  stroke-width: 1.8;
+}
+
+@media (max-width: 767px) {
+  .sidebar-dock ~ main {
+    padding-bottom: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 html.dark {
@@ -45,35 +66,35 @@ html.dark {
 html.dark .bg-white,
 html.dark .bg-white\/80,
 html.dark .bg-white\/90 {
-  background-color: #14251e;
+  background-color: #132944;
 }
 
 html.dark .bg-slate-50,
 html.dark .bg-slate-50\/50 {
-  background-color: #0b1712;
+  background-color: #0b1b32;
 }
 
 html.dark .bg-slate-100,
 html.dark .bg-slate-200 {
-  background-color: #22352c;
+  background-color: #203956;
 }
 
 html.dark .text-slate-900,
 html.dark .text-slate-800 {
-  color: #f6f8f5;
+  color: #f1f7fd;
 }
 
 html.dark .text-slate-700,
 html.dark .text-slate-600 {
-  color: #d7e2db;
+  color: #d9e8f5;
 }
 
 html.dark .text-slate-500 {
-  color: #b8cbbf;
+  color: #bfd6e9;
 }
 
 html.dark .text-slate-400 {
-  color: #89a292;
+  color: #8eacc8;
 }
 
 html.dark .border-slate-100,
@@ -81,12 +102,12 @@ html.dark .border-slate-200,
 html.dark .border-slate-200\/80,
 html.dark .border-slate-200\/90,
 html.dark .border-slate-300 {
-  border-color: #34483d;
+  border-color: #365674;
 }
 
 html.dark .glass-panel {
-  background: rgba(20, 37, 30, 0.9);
-  border-color: rgba(52, 72, 61, 0.8);
+  background: rgba(19, 41, 68, 0.92);
+  border-color: rgba(54, 86, 116, 0.8);
 }
 
 /* Glassmorphism helpers */
@@ -106,14 +127,14 @@ html.dark .glass-panel {
 
 /* Modern Gradient Accents */
 .gradient-brand {
-  background: linear-gradient(135deg, #115e43 0%, #96ad2c 100%);
+  background: linear-gradient(135deg, #112544 0%, #2298ca 100%);
 }
 
 .gradient-mesh {
   background-image:
-    radial-gradient(at 0% 0%, rgba(23, 118, 83, 0.11) 0px, transparent 48%),
-    radial-gradient(at 100% 0%, rgba(200, 219, 109, 0.17) 0px, transparent 45%),
-    radial-gradient(at 50% 100%, rgba(212, 92, 62, 0.06) 0px, transparent 52%);
+    radial-gradient(at 0% 0%, rgba(98, 165, 243, 0.13) 0px, transparent 48%),
+    radial-gradient(at 100% 0%, rgba(77, 188, 233, 0.16) 0px, transparent 45%),
+    radial-gradient(at 50% 100%, rgba(31, 81, 156, 0.06) 0px, transparent 52%);
 }
 
 /* Custom modern scrollbar */

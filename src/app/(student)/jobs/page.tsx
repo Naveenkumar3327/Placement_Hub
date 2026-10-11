@@ -92,7 +92,7 @@ export default function JobsDirectoryPage() {
                 Campus Placement Opportunities
               </h1>
               <p className="text-xs text-slate-500">
-                Browse verified campus drives with automated AI match ratings
+                Browse verified campus drives with personalized role-match ratings
               </p>
             </div>
             <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-200">
@@ -197,7 +197,7 @@ export default function JobsDirectoryPage() {
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div className="flex items-center space-x-1 text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>90%+ AI Match</span>
+                    <span>90%+ role match</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -244,7 +244,7 @@ export default function JobsDirectoryPage() {
                   <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
                   <p className="font-bold text-emerald-900 text-sm">Application Submitted!</p>
                   <p className="text-xs text-emerald-700">
-                    Your profile and AI match analysis have been sent to the recruiter.
+                    Your profile and role-match analysis have been sent to the recruiter.
                   </p>
                 </div>
               ) : (

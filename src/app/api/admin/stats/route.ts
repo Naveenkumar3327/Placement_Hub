@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     // Real analytics charts datasets
     const departmentPlacement = [
       { department: "CSE", placed: 42, total: 48, percentage: 87.5 },
-      { department: "AI & Data Science", placed: 36, total: 40, percentage: 90.0 },
+      { department: "Data Science", placed: 36, total: 40, percentage: 90.0 },
       { department: "ECE", placed: 28, total: 35, percentage: 80.0 },
       { department: "IT", placed: 31, total: 36, percentage: 86.1 },
       { department: "Mechanical", placed: 18, total: 26, percentage: 69.2 },
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
 
     const skillDemand = [
       { skill: "React / Next.js", demand: 94 },
-      { skill: "Python & AI/ML", demand: 88 },
+      { skill: "Python & Machine Learning", demand: 88 },
       { skill: "Node.js / Express", demand: 82 },
       { skill: "Docker & AWS", demand: 76 },
       { skill: "SQL / MongoDB", demand: 70 },

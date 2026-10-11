@@ -76,7 +76,7 @@ export default function StudentDashboardPage() {
               Welcome back, {profile?.name || "Student"}! 👋
             </h1>
             <p className="text-sm text-indigo-200 font-normal">
-              Your profile is currently matching with {recommendedJobs.length} top campus drives. Explore personalized opportunities, check your ATS score, or start an AI mock interview.
+              Your profile is matching with {recommendedJobs.length} campus drives. Explore opportunities, check your ATS score, or start interview practice.
             </p>
             <div className="pt-2 flex flex-wrap gap-2.5">
               <Link
@@ -245,7 +245,7 @@ export default function StudentDashboardPage() {
                     <p className="text-[11px] text-slate-500">{app.companyName}</p>
                     <div className="flex justify-between text-[10px] text-slate-400 pt-0.5">
                       <span>Applied: {formatDate(app.appliedDate)}</span>
-                      <span className="font-semibold text-indigo-600">AI Match: {app.aiMatchScore}%</span>
+                      <span className="font-semibold text-indigo-600">Role match: {app.aiMatchScore}%</span>
                     </div>
                   </div>
                 ))

@@ -9,11 +9,14 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "seed": "node scripts/seed.mjs",
+    "import:kaggle-questions": "node scripts/import-kaggle-interview-questions.mjs",
     "test": "node scripts/test-runner.mjs"
   },
   "dependencies": {
+    "adm-zip": "^0.6.1",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
+    "csv-parse": "^7.0.3",
     "framer-motion": "^12.4.7",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^1.16.0",

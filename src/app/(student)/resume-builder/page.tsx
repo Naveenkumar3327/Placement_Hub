@@ -47,7 +47,7 @@ export default function ResumeBuilderPage() {
     ],
     projects: [
       {
-        title: "Campus AI Placement Platform",
+        title: "Campus Placement Platform",
         tech: "Next.js, TypeScript, MongoDB, LLM APIs",
         description:
           "Engineered full-stack recruitment suite with automated ATS score checker and mock interview simulator serving over 500+ candidates.",

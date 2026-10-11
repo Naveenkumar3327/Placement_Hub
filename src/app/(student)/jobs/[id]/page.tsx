@@ -178,14 +178,14 @@ export default function JobDetailsPage() {
           </div>
         )}
 
-        {/* AI Resume-Job Compatibility Engine Showcase */}
+        {/* Resume and role compatibility summary */}
         {match && (
           <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 text-white shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-800/80 pb-4">
               <div>
                 <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 text-indigo-300 text-xs font-semibold mb-1">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>AI Resume-Job Compatibility Engine</span>
+                  <span>Resume and role compatibility</span>
                 </div>
                 <h2 className="text-xl font-bold">Role Alignment Breakdown</h2>
               </div>
@@ -216,7 +216,7 @@ export default function JobDetailsPage() {
               </div>
             </div>
 
-            {/* AI Explanation Text */}
+            {/* Match explanation */}
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
               <p className="text-xs font-bold text-cyan-300 uppercase tracking-wide">
                 Why this opportunity aligns with you:
