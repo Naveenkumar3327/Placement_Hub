@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db/connect";
 import { Job } from "@/lib/db/models/Job";
 import { memoryDb } from "@/lib/db/memoryDb";
 import { AuditService } from "@/lib/services/auditService";
+import { toAnonymousJob } from "@/lib/jobs/publicJob";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,6 +15,20 @@ export async function GET(req: NextRequest) {
     const location = searchParams.get("location")?.toLowerCase() || "";
     const experienceLevel = searchParams.get("experienceLevel") || "";
     const companyId = searchParams.get("companyId") || "";
+    const { user, payload } = await getCurrentUser(req);
+    const isSignedIn = Boolean(user && payload);
+
+    if (companyId && !isSignedIn) {
+      return NextResponse.json({ success: false, message: "Sign in to view company postings." }, { status: 401 });
+    }
+
+    if (
+      companyId &&
+      payload?.role !== "admin" &&
+      (payload?.role !== "company" || String(payload.userId) !== companyId)
+    ) {
+      return NextResponse.json({ success: false, message: "You can only view your own company postings." }, { status: 403 });
+    }
 
     let jobs: any[] = [];
 
@@ -50,7 +65,7 @@ export async function GET(req: NextRequest) {
       if (companyId && String(j.companyId) !== String(companyId)) {
         return false;
       }
-      if (!companyId && (j.status !== "published" || j.approvalStatus === "rejected")) {
+      if (!companyId && (j.status !== "published" || j.approvalStatus !== "approved")) {
         return false;
       }
       if (type && j.type !== type) return false;
@@ -59,17 +74,19 @@ export async function GET(req: NextRequest) {
       if (location && !j.location.toLowerCase().includes(location)) return false;
       if (search) {
         const titleMatch = j.title.toLowerCase().includes(search);
-        const compMatch = j.companyName.toLowerCase().includes(search);
+        const compMatch = String(j.companyName || "").toLowerCase().includes(search);
         const skillMatch = (j.skills || []).some((s: string) => s.toLowerCase().includes(search));
         if (!titleMatch && !compMatch && !skillMatch) return false;
       }
       return true;
     });
 
+    const visibleJobs = isSignedIn ? filtered : filtered.map(toAnonymousJob);
+
     return NextResponse.json({
       success: true,
-      count: filtered.length,
-      jobs: filtered,
+      count: visibleJobs.length,
+      jobs: visibleJobs,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });

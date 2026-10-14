@@ -160,7 +160,7 @@ export default function JobsDirectoryPage() {
                       <h2 className="text-lg font-bold text-slate-900">{job.title}</h2>
                       <p className="text-xs font-semibold text-slate-500 mt-0.5 flex items-center space-x-1">
                         <Building className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{job.companyName}</span>
+                        <span>{job.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : job.companyName}</span>
                       </p>
                     </div>
                     <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase bg-indigo-50 text-indigo-700 border border-indigo-200">
@@ -236,7 +236,7 @@ export default function JobsDirectoryPage() {
                   Submit Campus Application
                 </span>
                 <h3 className="text-xl font-bold text-slate-900 mt-1">{selectedJob.title}</h3>
-                <p className="text-xs text-slate-500">{selectedJob.companyName} • {selectedJob.location}</p>
+                <p className="text-xs text-slate-500">{selectedJob.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : selectedJob.companyName} • {selectedJob.location}</p>
               </div>
 
               {applySuccess ? (

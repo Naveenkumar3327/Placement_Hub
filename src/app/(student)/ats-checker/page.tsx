@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { Sidebar } from "@/components/ui/Sidebar";
 import {
   Sparkles,
@@ -304,7 +305,7 @@ Requirements:
                     <span className="min-w-0">
                       <span className="block truncate text-xs font-bold text-slate-900">{job.title}</span>
                       <span className="mt-1 flex flex-wrap items-center gap-x-3 text-[11px] text-slate-500">
-                        <span className="inline-flex items-center gap-1"><Building2 className="h-3 w-3" />{job.companyName}</span>
+                        <span className="inline-flex items-center gap-1"><Building2 className="h-3 w-3" />{job.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : job.companyName}</span>
                         <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{job.location}</span>
                         <span>{score} matching terms</span>
                       </span>

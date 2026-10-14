@@ -170,7 +170,7 @@ export default function StudentDashboardPage() {
                     <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                       <span className="flex items-center space-x-1">
                         <Building className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{job.companyName}</span>
+                        <span>{job.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : job.companyName}</span>
                       </span>
                       <span className="flex items-center space-x-1">
                         <MapPin className="w-3.5 h-3.5 text-slate-400" />

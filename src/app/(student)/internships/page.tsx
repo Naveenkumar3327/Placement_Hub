@@ -42,7 +42,7 @@ export default function InternshipsPage() {
     const s = search.toLowerCase();
     return (
       item.title.toLowerCase().includes(s) ||
-      item.companyName.toLowerCase().includes(s) ||
+      (item.companyName || "").toLowerCase().includes(s) ||
       (item.skills || []).some((sk: string) => sk.toLowerCase().includes(s))
     );
   });
@@ -100,7 +100,7 @@ export default function InternshipsPage() {
                       <h2 className="text-lg font-bold text-slate-900">{item.title}</h2>
                       <p className="text-xs font-semibold text-slate-500 mt-0.5 flex items-center space-x-1">
                         <Building className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{item.companyName}</span>
+                        <span>{item.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : item.companyName}</span>
                       </p>
                     </div>
                     <span className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase bg-cyan-50 text-cyan-800 border border-cyan-200">

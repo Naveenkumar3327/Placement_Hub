@@ -137,7 +137,7 @@ export default function JobDetailsPage() {
             <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 font-medium">
               <span className="flex items-center space-x-1">
                 <Building className="w-4 h-4 text-slate-400" />
-                <span>{job.companyName}</span>
+                <span>{job.employerHidden ? <Link href="/login" className="text-indigo-600 hover:underline">Sign in to view employer</Link> : job.companyName}</span>
               </span>
               <span className="flex items-center space-x-1">
                 <MapPin className="w-4 h-4 text-slate-400" />

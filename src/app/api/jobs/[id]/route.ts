@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db/connect";
 import { Job } from "@/lib/db/models/Job";
 import { memoryDb } from "@/lib/db/memoryDb";
 import { AuditService } from "@/lib/services/auditService";
+import { toAnonymousJob } from "@/lib/jobs/publicJob";
 
 export async function GET(
   req: NextRequest,
@@ -30,7 +31,24 @@ export async function GET(
       return NextResponse.json({ success: false, message: "Job not found." }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, job });
+    const { user, payload } = await getCurrentUser(req);
+    const isSignedIn = Boolean(user && payload);
+    const isOwnerOrAdmin = Boolean(
+      user &&
+      payload &&
+      (payload.role === "admin" ||
+        (payload.role === "company" && String(payload.userId) === String(job.companyId)))
+    );
+    const isPubliclyVisible = job.status === "published" && job.approvalStatus === "approved";
+
+    if (!isPubliclyVisible && !isOwnerOrAdmin) {
+      return NextResponse.json({ success: false, message: "Job not found." }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      job: isSignedIn ? job : toAnonymousJob(job),
+    });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
