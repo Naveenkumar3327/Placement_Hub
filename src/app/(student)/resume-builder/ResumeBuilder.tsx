@@ -268,7 +268,7 @@ export default function ResumeBuilder() {
 
   return (
     <div className="flex min-h-screen flex-1 bg-slate-50">
-      <div className="no-print"><Sidebar role="student" /></div>
+      <Sidebar role="student" />
       <main className="mx-auto flex-1 space-y-5 overflow-y-auto p-4 sm:p-6 lg:p-8">
         <header className="no-print flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center">
           <div>
