@@ -5,22 +5,36 @@ export interface AiPromptOptions {
   temperature?: number;
   maxTokens?: number;
   jsonMode?: boolean;
+  provider?: "configured" | "huggingface";
 }
 
 export class AiProvider {
-  private static getProvider(): "gemini" | "openai" | "fallback" {
-    const provider = (process.env.AI_PROVIDER || "gemini").toLowerCase();
+  private static getProvider(preference: AiPromptOptions["provider"] = "configured"): "gemini" | "openai" | "huggingface" | "fallback" {
+    const provider = preference === "huggingface"
+      ? "huggingface"
+      : (process.env.AI_PROVIDER || "gemini").toLowerCase();
     if (provider === "gemini" && process.env.GEMINI_API_KEY) {
       return "gemini";
     }
     if (provider === "openai" && process.env.OPENAI_API_KEY) {
       return "openai";
     }
+    if (provider === "huggingface" && process.env.HUGGINGFACE_API_TOKEN) {
+      return "huggingface";
+    }
     return "fallback";
   }
 
+  public static getModelLabel(preference: AiPromptOptions["provider"] = "configured"): string {
+    const provider = this.getProvider(preference);
+    if (provider === "gemini") return process.env.GEMINI_MODEL || "Gemini 2.5 Flash";
+    if (provider === "openai") return "OpenAI GPT-4o mini";
+    if (provider === "huggingface") return process.env.HUGGINGFACE_MODEL || "Qwen/Qwen2.5-7B-Instruct";
+    return "Local ATS writer";
+  }
+
   public static async generateText(prompt: string, options: AiPromptOptions = {}): Promise<string> {
-    const provider = this.getProvider();
+    const provider = this.getProvider(options.provider);
 
     if (provider === "gemini") {
       try {
@@ -84,6 +98,36 @@ export class AiProvider {
         }
       } catch (err) {
         console.warn("OpenAI API call failed, falling back to heuristic engine:", err);
+      }
+    }
+
+    if (provider === "huggingface") {
+      try {
+        const model = process.env.HUGGINGFACE_MODEL || "Qwen/Qwen2.5-7B-Instruct";
+        const res = await fetch("https://router.huggingface.co/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.HUGGINGFACE_API_TOKEN}`,
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              ...(options.systemPrompt ? [{ role: "system", content: options.systemPrompt }] : []),
+              { role: "user", content: prompt },
+            ],
+            temperature: options.temperature ?? 0.3,
+            max_tokens: options.maxTokens ?? 1800,
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const content = data?.choices?.[0]?.message?.content;
+          if (typeof content === "string") return content;
+        }
+      } catch (err) {
+        console.warn("Hugging Face model call failed, falling back to local ATS writer:", err);
       }
     }
 

@@ -14,7 +14,7 @@
 ### 🎓 1. Student Portal
 - **Dashboard & KPIs**: Real-time tracker for applications, shortlists, scheduled interviews, and received offers.
 - **ATS Resume Auditor**: Computes an algorithmic ATS compatibility score (0-100), measures keyword relevance, action verb impact, section presence, and delivers actionable AI critique.
-- **Interactive Resume Builder**: Multi-template switcher (Modern Tech, Classic Executive, Minimal ATS) with live document preview and 1-click printable PDF export.
+- **AI Resume Builder**: Prefills from the student profile, imports text-based PDF/DOCX templates, generates editable ATS-friendly content, and exports print-ready PDF or Word-compatible documents. Includes a downloadable blank template and links to external template libraries.
 - **Campus Opportunities Directory**: Search and filter full-time drives and summer internships with live AI match score badges (e.g. 92% Match).
 - **Application Tracking System (ATS)**: Interactive Kanban board, Table view, and Timeline view spanning multi-stage hiring pipelines (*Applied* ➔ *Under Review* ➔ *Shortlisted* ➔ *Interview Scheduled* ➔ *Selected*).
 - **AI Mock Interview Simulator**: Select target role (Full Stack, AI/ML, Cloud/DevOps, Data Science), difficulty, and focus type (Technical/HR/Behavioral); receive real-time per-answer evaluations and comprehensive final reports.
@@ -46,7 +46,7 @@
 | **Visualizations** | Recharts (Responsive Area, Bar, and Funnel charts) |
 | **Backend** | Next.js Server & Route Handlers, Node.js, JWT, BcryptJS |
 | **Database** | MongoDB, Mongoose, plus embedded high-speed memory store fallback |
-| **AI Layer** | Configurable via `AI_PROVIDER` (Google Gemini 1.5 Flash / OpenAI GPT-4o-mini) + built-in algorithmic heuristic engine |
+| **AI Layer** | Configurable Google Gemini / OpenAI, optional open Qwen2.5-7B-Instruct through Hugging Face Inference Providers, plus a local resume-writing fallback |
 | **Testing** | Node.js Test Runner (`scripts/test-runner.mjs`) |
 
 ---
@@ -79,12 +79,17 @@ JWT_SECRET=production-grade-jwt-secret-key-32-chars-long-placement-portal
 JWT_EXPIRES_IN=7d
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# AI Provider ("gemini" | "openai")
+# AI Provider ("gemini" | "openai" | "huggingface")
 AI_PROVIDER=gemini
 GEMINI_API_KEY=
 OPENAI_API_KEY=
+HUGGINGFACE_API_TOKEN=
+HUGGINGFACE_MODEL=Qwen/Qwen2.5-7B-Instruct
 ```
 *(Note: If no API key is supplied, CampusAI automatically runs on its built-in heuristic/hybrid engine so all features work reliably out of the box).*
+
+For the resume builder, choose the configured Gemini/OpenAI provider or the open Qwen model from Hugging Face. The model drafts from the supplied profile and imported resume; review all generated details before downloading.
+For Hugging Face, set `HUGGINGFACE_API_TOKEN` to a token with Inference Providers access.
 
 ### 4. Database Seeding & Testing
 ```bash

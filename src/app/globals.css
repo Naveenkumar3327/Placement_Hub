@@ -155,6 +155,10 @@ html.dark .glass-panel {
 
 /* Print styles for Resume Export */
 @media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
   body {
     background: #ffffff !important;
     color: #000000 !important;
@@ -168,5 +172,23 @@ html.dark .glass-panel {
     padding: 0 !important;
     box-shadow: none !important;
     border: none !important;
+  }
+  .resume-builder-layout {
+    display: block !important;
+  }
+  .resume-preview-column,
+  .resume-preview-sticky {
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .resume-page {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
   }
 }
