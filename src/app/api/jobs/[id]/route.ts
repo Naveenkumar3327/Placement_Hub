@@ -69,29 +69,53 @@ export async function PUT(
     delete updates._id;
     delete updates.createdAt;
 
-    const jobIdx = memoryDb.jobs.findIndex((j) => String(j._id) === id);
-    if (jobIdx === -1) {
+    let existingJob: any = null;
+    try {
+      const db = await connectDB();
+      if (db && db.connection.readyState === 1) {
+        existingJob = await Job.findById(id).lean();
+      }
+    } catch (e) {}
+
+    if (!existingJob) {
+      existingJob = memoryDb.jobs.find((j) => String(j._id) === id);
+    }
+
+    if (!existingJob) {
       return NextResponse.json({ success: false, message: "Job not found." }, { status: 404 });
     }
 
     // Ensure company owns this job or is admin
-    if (payload.role !== "admin" && String(memoryDb.jobs[jobIdx].companyId) !== String(payload.userId)) {
+    if (payload.role !== "admin" && String(existingJob.companyId) !== String(payload.userId)) {
       return NextResponse.json({ success: false, message: "Forbidden." }, { status: 403 });
     }
 
-    memoryDb.jobs[jobIdx] = {
-      ...memoryDb.jobs[jobIdx],
-      ...updates,
-      updatedAt: new Date(),
-    };
-
+    let updatedJob: any = null;
     try {
       const db = await connectDB();
       if (db && db.connection.readyState === 1) {
-        await Job.findByIdAndUpdate(id, { $set: updates });
+        updatedJob = await Job.findByIdAndUpdate(
+          id,
+          { $set: { ...updates, updatedAt: new Date() } },
+          { new: true }
+        ).lean();
       }
     } catch (e) {
       // safely handled
+    }
+
+    const jobIdx = memoryDb.jobs.findIndex((j) => String(j._id) === id);
+    if (jobIdx !== -1) {
+      memoryDb.jobs[jobIdx] = {
+        ...memoryDb.jobs[jobIdx],
+        ...updates,
+        updatedAt: new Date(),
+      };
+      if (!updatedJob) updatedJob = memoryDb.jobs[jobIdx];
+    }
+
+    if (!updatedJob) {
+      updatedJob = { ...existingJob, ...updates, updatedAt: new Date() };
     }
 
     await AuditService.logAction({
@@ -106,7 +130,7 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       message: "Job updated successfully.",
-      job: memoryDb.jobs[jobIdx],
+      job: updatedJob,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -124,9 +148,24 @@ export async function DELETE(
       return NextResponse.json({ success: false, message: "Unauthorized." }, { status: 403 });
     }
 
-    const jobIdx = memoryDb.jobs.findIndex((j) => String(j._id) === id);
-    if (jobIdx !== -1) {
-      memoryDb.jobs.splice(jobIdx, 1);
+    let existingJob: any = null;
+    try {
+      const db = await connectDB();
+      if (db && db.connection.readyState === 1) {
+        existingJob = await Job.findById(id).lean();
+      }
+    } catch (e) {}
+
+    if (!existingJob) {
+      existingJob = memoryDb.jobs.find((j) => String(j._id) === id);
+    }
+
+    if (!existingJob) {
+      return NextResponse.json({ success: false, message: "Job not found." }, { status: 404 });
+    }
+
+    if (payload.role !== "admin" && String(existingJob.companyId) !== String(payload.userId)) {
+      return NextResponse.json({ success: false, message: "Forbidden." }, { status: 403 });
     }
 
     try {
@@ -136,6 +175,11 @@ export async function DELETE(
       }
     } catch (e) {
       // safely handled
+    }
+
+    const jobIdx = memoryDb.jobs.findIndex((j) => String(j._id) === id);
+    if (jobIdx !== -1) {
+      memoryDb.jobs.splice(jobIdx, 1);
     }
 
     return NextResponse.json({ success: true, message: "Job removed successfully." });

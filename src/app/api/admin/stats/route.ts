@@ -1,15 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/context";
 import { memoryDb } from "@/lib/db/memoryDb";
+import { connectDB } from "@/lib/db/connect";
+import { User } from "@/lib/db/models/User";
+import { Job } from "@/lib/db/models/Job";
+import { Application } from "@/lib/db/models/Application";
 
 export async function GET(req: NextRequest) {
   try {
     const { user, payload } = await getCurrentUser(req);
-    // Allow admin, and allow recruiters / students to view aggregate placement trends
-    const students = memoryDb.users.filter((u) => u.role === "student");
-    const companies = memoryDb.users.filter((u) => u.role === "company");
-    const jobs = memoryDb.jobs;
-    const applications = memoryDb.applications;
+
+    let students: any[] = [];
+    let companies: any[] = [];
+    let jobs: any[] = [];
+    let applications: any[] = [];
+
+    try {
+      const db = await connectDB();
+      if (db && db.connection.readyState === 1) {
+        const [dbStudents, dbCompanies, dbJobs, dbApps] = await Promise.all([
+          User.find({ role: "student" }).lean(),
+          User.find({ role: "company" }).lean(),
+          Job.find().lean(),
+          Application.find().lean(),
+        ]);
+        if (dbStudents.length > 0 || dbJobs.length > 0) {
+          students = dbStudents;
+          companies = dbCompanies;
+          jobs = dbJobs;
+          applications = dbApps;
+        }
+      }
+    } catch (e) {
+      // fallback
+    }
+
+    if (students.length === 0 && jobs.length === 0) {
+      students = memoryDb.users.filter((u) => u.role === "student");
+      companies = memoryDb.users.filter((u) => u.role === "company");
+      jobs = memoryDb.jobs;
+      applications = memoryDb.applications;
+    }
 
     const activeJobs = jobs.filter((j) => j.status === "published");
     const internships = jobs.filter((j) => j.type === "internship");

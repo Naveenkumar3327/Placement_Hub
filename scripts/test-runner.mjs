@@ -121,6 +121,24 @@ async function runAll() {
     assert.strictEqual(coverage, 50, "Coverage should reflect exact category acquisition percentage");
   });
 
+  console.log("\n🗄️ 6. MONGODB DATABASE CONNECTIVITY & OPERATIONS TESTS");
+
+  await runAsyncTest("MongoDB localhost connection & collection verification", async () => {
+    const mongoose = await import("mongoose");
+    const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/placement_portal";
+    await mongoose.default.connect(mongoUri, { serverSelectionTimeoutMS: 4000 });
+    const db = mongoose.default.connection.db;
+    assert.ok(db, "MongoDB database instance must be active");
+    
+    const userCount = await db.collection("users").countDocuments();
+    assert.ok(userCount > 0, `Users collection must contain seeded data (found: ${userCount})`);
+
+    const jobCount = await db.collection("jobs").countDocuments();
+    assert.ok(jobCount > 0, `Jobs collection must contain seeded data (found: ${jobCount})`);
+
+    await mongoose.default.disconnect();
+  });
+
   console.log("\n=======================================================");
   console.log(`TOTAL SUITES EXECUTED: ${passedTests + failedTests}`);
   console.log(`✓ PASSED: ${passedTests}`);

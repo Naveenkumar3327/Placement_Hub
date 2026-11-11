@@ -2,7 +2,8 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 export type UserRole = "student" | "company" | "admin";
 
-export interface IUser extends Document {
+export interface IUser extends Document<string> {
+  _id: string;
   name: string;
   email: string;
   passwordHash: string;
@@ -76,6 +77,7 @@ export interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },

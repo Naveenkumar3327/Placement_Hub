@@ -19,7 +19,7 @@ declare global {
   var __memoryDb: MemoryDbStore | undefined;
 }
 
-function initSeedData(): MemoryDbStore {
+export function initSeedData(): MemoryDbStore {
   const adminPasswordHash = bcrypt.hashSync("Admin@12345", 8);
   const studentPasswordHash = bcrypt.hashSync("Student@12345", 8);
   const companyPasswordHash = bcrypt.hashSync("Company@12345", 8);

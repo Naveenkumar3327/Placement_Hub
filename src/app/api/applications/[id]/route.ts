@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/context";
 import { connectDB } from "@/lib/db/connect";
 import { Application } from "@/lib/db/models/Application";
+import { Notification } from "@/lib/db/models/Notification";
 import { memoryDb } from "@/lib/db/memoryDb";
 import { AuditService } from "@/lib/services/auditService";
 
@@ -19,12 +20,21 @@ export async function PUT(
     const body = await req.json();
     const { status, notes, interviewDetails } = body;
 
-    const appIdx = memoryDb.applications.findIndex((a) => String(a._id) === id);
-    if (appIdx === -1) {
-      return NextResponse.json({ success: false, message: "Application not found." }, { status: 404 });
+    let currentApp: any = null;
+    try {
+      const db = await connectDB();
+      if (db && db.connection.readyState === 1) {
+        currentApp = await Application.findById(id).lean();
+      }
+    } catch (e) {}
+
+    if (!currentApp) {
+      currentApp = memoryDb.applications.find((a) => String(a._id) === id);
     }
 
-    const currentApp = memoryDb.applications[appIdx];
+    if (!currentApp) {
+      return NextResponse.json({ success: false, message: "Application not found." }, { status: 404 });
+    }
 
     // Students can only withdraw their own application
     if (payload.role === "student") {
@@ -38,18 +48,31 @@ export async function PUT(
     if (notes !== undefined) updates.notes = notes;
     if (interviewDetails !== undefined) updates.interviewDetails = interviewDetails;
 
-    memoryDb.applications[appIdx] = {
-      ...memoryDb.applications[appIdx],
-      ...updates,
-    };
-
+    let updatedApp: any = null;
     try {
       const db = await connectDB();
       if (db && db.connection.readyState === 1) {
-        await Application.findByIdAndUpdate(id, { $set: updates });
+        updatedApp = await Application.findByIdAndUpdate(
+          id,
+          { $set: updates },
+          { new: true }
+        ).lean();
       }
     } catch (e) {
       // safely handled
+    }
+
+    const appIdx = memoryDb.applications.findIndex((a) => String(a._id) === id);
+    if (appIdx !== -1) {
+      memoryDb.applications[appIdx] = {
+        ...memoryDb.applications[appIdx],
+        ...updates,
+      };
+      if (!updatedApp) updatedApp = memoryDb.applications[appIdx];
+    }
+
+    if (!updatedApp) {
+      updatedApp = { ...currentApp, ...updates };
     }
 
     // Auto-create notification for student when recruiter updates status
@@ -63,8 +86,8 @@ export async function PUT(
         "Rejected": `Update on your application for "${currentApp.jobTitle}" at ${currentApp.companyName}.`,
       };
 
-      memoryDb.notifications.unshift({
-        _id: `notif_${Date.now()}`,
+      const notifObj = {
+        _id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         recipientId: String(currentApp.studentId),
         title: `Application Status: ${status}`,
         message: statusMessages[status] || `Your application status changed to ${status}.`,
@@ -72,7 +95,16 @@ export async function PUT(
         link: "/applications",
         read: false,
         createdAt: new Date(),
-      });
+      };
+
+      try {
+        const db = await connectDB();
+        if (db && db.connection.readyState === 1) {
+          await Notification.create(notifObj);
+        }
+      } catch (e) {}
+
+      memoryDb.notifications.unshift(notifObj);
     }
 
     await AuditService.logAction({
@@ -88,7 +120,7 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       message: "Application updated successfully.",
-      application: memoryDb.applications[appIdx],
+      application: updatedApp,
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });

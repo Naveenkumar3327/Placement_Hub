@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface IMessage extends Document {
+export interface IMessage extends Document<string> {
+  _id: string;
   conversationId: string;
   senderId: mongoose.Types.ObjectId | string;
   senderName: string;
@@ -13,6 +14,7 @@ export interface IMessage extends Document {
 
 const MessageSchema = new Schema<IMessage>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     conversationId: { type: String, required: true, index: true },
     senderId: { type: Schema.Types.Mixed, required: true },
     senderName: { type: String, required: true },

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface IJob extends Document {
+export interface IJob extends Document<string> {
+  _id: string;
   title: string;
   type: "full-time" | "internship" | "part-time" | "contract";
   description: string;
@@ -32,6 +33,7 @@ export interface IJob extends Document {
 
 const JobSchema = new Schema<IJob>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     title: { type: String, required: true },
     type: { type: String, enum: ["full-time", "internship", "part-time", "contract"], required: true },
     description: { type: String, required: true },

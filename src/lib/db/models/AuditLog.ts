@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface IAuditLog extends Document {
+export interface IAuditLog extends Document<string> {
+  _id: string;
   actorId: mongoose.Types.ObjectId | string;
   actorEmail: string;
   actorRole: "student" | "company" | "admin";
@@ -14,6 +15,7 @@ export interface IAuditLog extends Document {
 
 const AuditLogSchema = new Schema<IAuditLog>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     actorId: { type: Schema.Types.Mixed, required: true },
     actorEmail: { type: String, required: true },
     actorRole: { type: String, required: true },

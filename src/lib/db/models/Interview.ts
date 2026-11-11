@@ -11,7 +11,8 @@ export interface IInterviewAnswer {
   improvements: string[];
 }
 
-export interface IInterview extends Document {
+export interface IInterview extends Document<string> {
+  _id: string;
   studentId: mongoose.Types.ObjectId | string;
   studentName?: string;
   targetRole: string;
@@ -34,6 +35,7 @@ export interface IInterview extends Document {
 
 const InterviewSchema = new Schema<IInterview>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     studentId: { type: Schema.Types.Mixed, required: true },
     studentName: { type: String, default: "" },
     targetRole: { type: String, required: true },

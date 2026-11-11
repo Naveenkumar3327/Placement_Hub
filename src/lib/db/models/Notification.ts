@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-export interface INotification extends Document {
+export interface INotification extends Document<string> {
+  _id: string;
   recipientId: mongoose.Types.ObjectId | string;
   senderId?: mongoose.Types.ObjectId | string;
   title: string;
@@ -20,6 +21,7 @@ export interface INotification extends Document {
 
 const NotificationSchema = new Schema<INotification>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     recipientId: { type: Schema.Types.Mixed, required: true },
     senderId: { type: Schema.Types.Mixed },
     title: { type: String, required: true },

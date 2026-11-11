@@ -10,7 +10,8 @@ export type ApplicationStatus =
   | "Rejected"
   | "Withdrawn";
 
-export interface IApplication extends Document {
+export interface IApplication extends Document<string> {
+  _id: string;
   jobId: mongoose.Types.ObjectId | string;
   studentId: mongoose.Types.ObjectId | string;
   companyId: mongoose.Types.ObjectId | string;
@@ -46,6 +47,7 @@ export interface IApplication extends Document {
 
 const ApplicationSchema = new Schema<IApplication>(
   {
+    _id: { type: String, default: () => new mongoose.Types.ObjectId().toString() },
     jobId: { type: Schema.Types.Mixed, required: true },
     studentId: { type: Schema.Types.Mixed, required: true },
     companyId: { type: Schema.Types.Mixed, required: true },
